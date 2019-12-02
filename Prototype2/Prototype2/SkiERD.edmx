@@ -1,0 +1,200 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl" Namespace="SkiERD.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2005">
+        <EntityContainer Name="SkiERDTargetContainer" >
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="SkiERD" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="SkiERDContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Donations" EntityType="SkiERD.Donation" />
+          <EntitySet Name="Rides" EntityType="SkiERD.Ride" />
+          <EntitySet Name="Lift_Projections" EntityType="SkiERD.Lift_Projections" />
+          <EntitySet Name="Tickets" EntityType="SkiERD.Tickets" />
+          <EntitySet Name="Reference_Table" EntityType="SkiERD.Reference_Table" />
+          <EntitySet Name="Rentals" EntityType="SkiERD.Rentals" />
+          <EntitySet Name="Inventories" EntityType="SkiERD.Inventory" />
+          <EntitySet Name="Lifts" EntityType="SkiERD.Lift" />
+          <EntitySet Name="Customers" EntityType="SkiERD.Customer" />
+          <AssociationSet Name="CustomerDonation" Association="SkiERD.CustomerDonation">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="Donation" EntitySet="Donations" />
+          </AssociationSet>
+          <AssociationSet Name="InventoryRentals" Association="SkiERD.InventoryRentals">
+            <End Role="Inventory" EntitySet="Inventories" />
+            <End Role="Rentals" EntitySet="Rentals" />
+          </AssociationSet>
+          <AssociationSet Name="RentalsCustomer" Association="SkiERD.RentalsCustomer">
+            <End Role="Rentals" EntitySet="Rentals" />
+            <End Role="Customer" EntitySet="Customers" />
+          </AssociationSet>
+          <AssociationSet Name="CustomerTickets" Association="SkiERD.CustomerTickets">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="Tickets" EntitySet="Tickets" />
+          </AssociationSet>
+          <AssociationSet Name="Reference_TableTickets" Association="SkiERD.Reference_TableTickets">
+            <End Role="Reference_Table" EntitySet="Reference_Table" />
+            <End Role="Tickets" EntitySet="Tickets" />
+          </AssociationSet>
+          <AssociationSet Name="CustomerRide" Association="SkiERD.CustomerRide">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="Ride" EntitySet="Rides" />
+          </AssociationSet>
+          <AssociationSet Name="RideLift" Association="SkiERD.RideLift">
+            <End EntitySet="Rides" Role="Ride" />
+            <End EntitySet="Lifts" Role="Lift" />
+          </AssociationSet>
+          <AssociationSet Name="LiftLift_Projections" Association="SkiERD.LiftLift_Projections">
+            <End EntitySet="Lifts" Role="Lift" />
+            <End EntitySet="Lift_Projections" Role="Lift_Projections" />
+          </AssociationSet>
+          </EntityContainer>
+        <EntityType Name="Donation">
+          <Key>
+            <PropertyRef Name="DonationID" />
+          </Key>
+          <Property Name="DonationID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Customer" Relationship="SkiERD.CustomerDonation" FromRole="Donation" ToRole="Customer" />
+          <Property Name="Donation_Amount" Type="Double" Nullable="false" />
+          <Property Name="Donation_Date" Type="DateTime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Ride">
+          <Key>
+            <PropertyRef Name="RideID" />
+          </Key>
+          <Property Name="RideID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Customer" Relationship="SkiERD.CustomerRide" FromRole="Ride" ToRole="Customer" />
+          <NavigationProperty Name="Lifts" Relationship="SkiERD.RideLift" FromRole="Ride" ToRole="Lift" />
+          <Property Name="Lift_Time" Type="DateTime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Lift_Projections">
+          <Key>
+            <PropertyRef Name="LiftProjID" />
+          </Key>
+          <Property Name="LiftProjID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Lift" Relationship="SkiERD.LiftLift_Projections" FromRole="Lift_Projections" ToRole="Lift" />
+          <Property Name="Report_date" Type="DateTime" Nullable="false" />
+          <Property Name="Projected_Attendance" Type="Int16" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tickets">
+          <Key>
+            <PropertyRef Name="TicketID" />
+          </Key>
+          <Property Name="TicketID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Customer" Relationship="SkiERD.CustomerTickets" FromRole="Tickets" ToRole="Customer" />
+          <NavigationProperty Name="Reference_Table" Relationship="SkiERD.Reference_TableTickets" FromRole="Tickets" ToRole="Reference_Table" />
+        </EntityType>
+        <EntityType Name="Reference_Table">
+          <Key>
+            <PropertyRef Name="TtypeID" />
+          </Key>
+          <Property Name="TtypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Tickets" Relationship="SkiERD.Reference_TableTickets" FromRole="Reference_Table" ToRole="Tickets" />
+        </EntityType>
+        <EntityType Name="Rentals">
+          <Key>
+            <PropertyRef Name="RentalID" />
+          </Key>
+          <Property Name="RentalID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Inventory" Relationship="SkiERD.InventoryRentals" FromRole="Rentals" ToRole="Inventory" />
+          <NavigationProperty Name="Customers" Relationship="SkiERD.RentalsCustomer" FromRole="Rentals" ToRole="Customer" />
+          <Property Name="Size" Type="String" Nullable="false" />
+          <Property Name="Rental_Price" Type="String" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Inventory">
+          <Key>
+            <PropertyRef Name="ProductID" />
+          </Key>
+          <Property Name="ProductID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Rentals" Relationship="SkiERD.InventoryRentals" FromRole="Inventory" ToRole="Rentals" />
+          <Property Name="ProductDescription" Type="String" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Lift">
+          <NavigationProperty Name="Ride" Relationship="SkiERD.RideLift" FromRole="Lift" ToRole="Ride" />
+          <NavigationProperty Name="Lift_Projections" Relationship="SkiERD.LiftLift_Projections" FromRole="Lift" ToRole="Lift_Projections" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="CustomerID" />
+          </Key>
+          <Property Name="CustomerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <NavigationProperty Name="Donations" Relationship="SkiERD.CustomerDonation" FromRole="Customer" ToRole="Donation" />
+          <NavigationProperty Name="Rental" Relationship="SkiERD.RentalsCustomer" FromRole="Customer" ToRole="Rentals" />
+          <NavigationProperty Name="Tickets" Relationship="SkiERD.CustomerTickets" FromRole="Customer" ToRole="Tickets" />
+          <NavigationProperty Name="Rides" Relationship="SkiERD.CustomerRide" FromRole="Customer" ToRole="Ride" />
+          <Property Name="Address" Type="String" Nullable="false" />
+          <Property Name="EMail" Type="String" Nullable="false" />
+          <Property Name="Age_Group" Type="Int16" Nullable="false" />
+          <Property Name="Active_Status" Type="Boolean" Nullable="false" />
+          <Property Name="Ski_or_Snow" Type="String" Nullable="false" />
+        </EntityType>
+        <Association Name="CustomerDonation">
+          <End Type="SkiERD.Customer" Role="Customer" Multiplicity="0..1" />
+          <End Type="SkiERD.Donation" Role="Donation" Multiplicity="*" />
+        </Association>
+        <Association Name="InventoryRentals">
+          <End Type="SkiERD.Inventory" Role="Inventory" Multiplicity="1" />
+          <End Type="SkiERD.Rentals" Role="Rentals" Multiplicity="*" />
+        </Association>
+        <Association Name="RentalsCustomer">
+          <End Type="SkiERD.Rentals" Role="Rentals" Multiplicity="*" />
+          <End Type="SkiERD.Customer" Role="Customer" Multiplicity="0..1" />
+        </Association>
+        <Association Name="CustomerTickets">
+          <End Type="SkiERD.Customer" Role="Customer" Multiplicity="0..1" />
+          <End Type="SkiERD.Tickets" Role="Tickets" Multiplicity="*" />
+        </Association>
+        <Association Name="Reference_TableTickets">
+          <End Type="SkiERD.Reference_Table" Role="Reference_Table" Multiplicity="1" />
+          <End Type="SkiERD.Tickets" Role="Tickets" Multiplicity="*" />
+        </Association>
+        <Association Name="CustomerRide">
+          <End Type="SkiERD.Customer" Role="Customer" Multiplicity="0..1" />
+          <End Type="SkiERD.Ride" Role="Ride" Multiplicity="*" />
+        </Association>
+        <Association Name="RideLift">
+          <End Type="SkiERD.Ride" Multiplicity="*" Role="Ride" />
+          <End Type="SkiERD.Lift" Multiplicity="1" Role="Lift" />
+        </Association>
+        <Association Name="LiftLift_Projections">
+          <End Type="SkiERD.Lift" Multiplicity="1" Role="Lift" />
+          <End Type="SkiERD.Lift_Projections" Multiplicity="*" Role="Lift_Projections" />
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs" Space="C-S">
+        <Alias Key="Model" Value="SkiERD" />
+        <Alias Key="Target" Value="SkiERD.Store" />
+        <EntityContainerMapping CdmEntityContainer="SkiERDContainer" StorageEntityContainer="SkiERDTargetContainer">
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="84a64d58e0e5472dab9a236984d82f1b" Name="Diagram1" >
+        <EntityTypeShape EntityType="SkiERD.Donation" Width="1.5" PointX="4.375" PointY="0.625" />
+        <EntityTypeShape EntityType="SkiERD.Ride" Width="1.5" PointX="1.125" PointY="2.125" />
+        <EntityTypeShape EntityType="SkiERD.Lift_Projections" Width="1.5" PointX="1.125" PointY="7.25" />
+        <EntityTypeShape EntityType="SkiERD.Tickets" Width="1.5" PointX="4.25" PointY="5.875" />
+        <EntityTypeShape EntityType="SkiERD.Reference_Table" Width="1.5" PointX="4.25" PointY="8.125" />
+        <EntityTypeShape EntityType="SkiERD.Rentals" Width="1.5" PointX="7.375" PointY="2.125" />
+        <EntityTypeShape EntityType="SkiERD.Inventory" Width="1.5" PointX="7.5" PointY="4.625" />
+        <EntityTypeShape EntityType="SkiERD.Lift" PointX="1.125" PointY="5" Width="1.5" />
+        <EntityTypeShape EntityType="SkiERD.Customer" Width="1.5" PointX="4.25" PointY="3.25" IsExpanded="true" />
+        <AssociationConnector Association="SkiERD.CustomerDonation" ManuallyRouted="true" >
+          <ConnectorPoint PointX="5.24999875" PointY="3.2500000000000013" />
+          <ConnectorPoint PointX="5.24999875" PointY="2.84686611328125" />
+          <ConnectorPoint PointX="4.6067695833333335" PointY="2.84686611328125" />
+          <ConnectorPoint PointX="4.6067695833333335" PointY="2.4315160481770834" />
+          <ConnectorPoint PointX="5.24999875" PointY="2.4315160481770834" />
+          <ConnectorPoint PointX="5.24999875" PointY="2.4129850260416661" />
+        </AssociationConnector>
+        <AssociationConnector Association="SkiERD.InventoryRentals" />
+        <AssociationConnector Association="SkiERD.RentalsCustomer" />
+        <AssociationConnector Association="SkiERD.CustomerTickets" />
+        <AssociationConnector Association="SkiERD.Reference_TableTickets" />
+        <AssociationConnector Association="SkiERD.CustomerRide" />
+        <AssociationConnector Association="SkiERD.RideLift" />
+        <AssociationConnector Association="SkiERD.LiftLift_Projections" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
